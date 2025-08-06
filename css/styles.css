@@ -69,8 +69,8 @@ body {
 }
 
 .icon {
-    height: 20px;
-    width: 20px;
+    height: 22px;
+    width: 22px;
     margin: .5rem;
     vertical-align: middle;
     fill: #fff;
@@ -117,4 +117,5 @@ li.playing {
             padding: 0;
             margin: 0;
             background-color: transparent;
+
         } */
