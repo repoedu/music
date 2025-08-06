@@ -1,0 +1,120 @@
+/* Default value
+font-size: 16px
+font-weight: 400
+*/
+* {
+    /* margin: 0;padding: 0; */
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #2e2d2d;
+}
+
+.song-list {
+    /*No muestra las viñetas o marcas*/
+    list-style-type: none;
+    font-size: 0.75rem;
+    /*El primer valor es en el eje x, el segundo valor es en el eje y*/
+    padding: 6px 12px;
+    border: 1px solid #cecece;
+    border-radius: 6px;
+    overflow-y: auto;
+}
+
+.song-list li {
+    padding: 3px;
+    border-bottom: 1px solid #cecece;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+    /*El primer valor es en el eje x, el segundo valor es en el eje y*/
+}
+
+.song-list li:hover {
+    background-color: #484848;
+    color: #fff;
+}
+
+.song-title-wrapper {
+    overflow: hidden;
+}
+
+.song-title {
+    text-align: center;
+    white-space: nowrap;
+    animation: slideIn 12s linear infinite;
+}
+
+/* Definición de la animación para el desplazamiento */
+@keyframes slideIn {
+    0% {
+        transform: translateX(100%);
+        /* Comienza fuera de la pantalla por la derecha */
+    }
+
+    100% {
+        transform: translateX(-100%);
+        /* Se mueve hacia fuera de la pantalla por la izquierda */
+    }
+}
+
+.small {
+    font-size: .75rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.icon {
+    height: 20px;
+    width: 20px;
+    margin: .5rem;
+    vertical-align: middle;
+    fill: #fff;
+}
+
+.icon:hover {
+    fill: #48a0f7;
+}
+
+.repeat-icon.active {
+    fill: #FFD700;
+}
+
+.random-icon.active {
+    fill: #FF6F00;
+}
+
+.button {
+    all: unset;
+    cursor: pointer;
+}
+
+.audio-controls {
+    background-color: #484848;
+    text-align: center;
+    width: 300px;
+    height: 40px;
+    align-content: center;
+}
+
+li.playing {
+    color: orangered;
+    /* background-color: #cecece; */
+    /* color: #000;
+            border-radius: 3px;
+            font-weight: bold;
+            padding-left: 8px; */
+}
+
+
+/* button {
+            border: none;
+            outline: none;
+            padding: 0;
+            margin: 0;
+            background-color: transparent;
+        } */
