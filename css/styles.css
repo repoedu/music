@@ -3,7 +3,8 @@ font-size: 16px
 font-weight: 400
 */
 * {
-    /* margin: 0;padding: 0; */
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
@@ -21,6 +22,7 @@ body {
     border: 1px solid #cecece;
     border-radius: 6px;
     overflow-y: auto;
+    margin-top: 0.5rem;
 }
 
 .song-list li {
@@ -45,6 +47,7 @@ body {
     text-align: center;
     white-space: nowrap;
     animation: slideIn 12s linear infinite;
+    margin: 1rem;
 }
 
 /* Definición de la animación para el desplazamiento */
@@ -69,8 +72,8 @@ body {
 }
 
 .icon {
-    height: 22px;
-    width: 22px;
+    height: 24px;
+    width: 24px;
     margin: .5rem;
     vertical-align: middle;
     fill: #fff;
@@ -119,3 +122,4 @@ li.playing {
             background-color: transparent;
 
         } */
+
