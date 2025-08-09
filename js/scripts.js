@@ -1,12 +1,16 @@
 "use strict";
 
 const songs = [
-    // { id: 1, title: "Como te va mi amor", artist: "Arena Hash", src: "audio/Arena Hash - Como te va mi amor.m4a" },
-    { id: 2, title: "Mil horas de amor", artist: "Arena Hash", src: "audio/Arena Hash - Mil horas de amor.m4a" },
-    { id: 3, title: "Te siento de solo pensar", artist: "Pedro Suarez Vertiz", src: "audio/Pedro Suarez Vertiz - Te siento de solo pensar.m4a" },
-    { id: 4, title: "Goodbye horses", artist: "Q Lazzarus", src: "audio/Q Lazzarus - Goodbye horses.m4a" },
-    { id: 5, title: "Sin aliento", artist: "Danza Invisible", src: "audio/Danza Invisible - Sin aliento.m4a" },
-    { id: 6, title: "Sin disfraz", artist: "Virus", src: "audio/Virus - Sin disfraz.m4a" }
+    // { id: "1", artist: "Hombres G", title: "Si no te tengo a ti", src: "audio/Hombres G - Si no te tengo a ti.m4a" },
+    { id: "2", artist: "Arena Hash", title: "Como te va mi amor", src: "audio/Arena Hash - Como te va mi amor.m4a" },
+    { id: "3", artist: "Virus", title: "Polvos de una relacion", src: "audio/Virus - Polvos de una relacion.m4a" },
+    { id: "4", artist: "Pedro Suarez Vertiz", title: "Te siento de solo pensar", src: "audio/Pedro Suarez Vertiz - Te siento de solo pensar.m4a" },
+    { id: "5", artist: "Virus", title: "Sin disfraz", src: "audio/Virus - Sin disfraz.m4a" },
+    { id: "6", artist: "Danza Invisible", title: "Sin aliento", src: "audio/Danza Invisible - Sin aliento.m4a" },
+    // { id: "7", artist: "Miguel Mateos", title: "Perdiendo el control", src: "audio/Miguel Mateos - Perdiendo el control.m4a" },
+    // { id: "8", artist: "Ciro y Los Persas", title: "Insisto", src: "audio/Ciro y Los Persas - Insisto.m4a" },
+    // { id: "9", artist: "Los Hermanos Moreno", title: "Por alguien como tu", src: "audio/Los Hermanos Moreno - Por alguien como tu.m4a" },
+    // { id: "10", artist: "Miguel Mateos", title: "Atado a un sentimiento", src: "audio/Miguel Mateos - Atado a un sentimiento.m4a" },
 ];
 
 // Ordenamos el listado de canciones por artista
@@ -112,3 +116,4 @@ loopTrackBtn.addEventListener("click", () => {
 
 displaySongs();
 loadSong(songs[currentSongIndex]);
+
