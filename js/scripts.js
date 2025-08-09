@@ -1,167 +1,114 @@
 "use strict";
 
 const songs = [
-    // { id: "1", artist: "Hombres G", title: "Si no te tengo a ti", src: "audio/Hombres G - Si no te tengo a ti.m4a" },
-    { id: "2", artist: "Arena Hash", title: "Como te va mi amor", src: "audio/Arena Hash - Como te va mi amor.m4a" },
-    { id: "3", artist: "Virus", title: "Polvos de una relacion", src: "audio/Virus - Polvos de una relacion.m4a" },
-    { id: "4", artist: "Pedro Suarez Vertiz", title: "Te siento de solo pensar", src: "audio/Pedro Suarez Vertiz - Te siento de solo pensar.m4a" },
-    { id: "5", artist: "Virus", title: "Sin disfraz", src: "audio/Virus - Sin disfraz.m4a" },
-    { id: "6", artist: "Danza Invisible", title: "Sin aliento", src: "audio/Danza Invisible - Sin aliento.m4a" },
-    // { id: "7", artist: "Miguel Mateos", title: "Perdiendo el control", src: "audio/Miguel Mateos - Perdiendo el control.m4a" },
-    // { id: "8", artist: "Ciro y Los Persas", title: "Insisto", src: "audio/Ciro y Los Persas - Insisto.m4a" },
-    // { id: "9", artist: "Los Hermanos Moreno", title: "Por alguien como tu", src: "audio/Los Hermanos Moreno - Por alguien como tu.m4a" },
-    // { id: "10", artist: "Miguel Mateos", title: "Atado a un sentimiento", src: "audio/Miguel Mateos - Atado a un sentimiento.m4a" },
+    // { id: 1, title: "Como te va mi amor", artist: "Arena Hash", src: "audio/Arena Hash - Como te va mi amor.m4a" },
+    { id: 2, title: "Mil horas de amor", artist: "Arena Hash", src: "audio/Arena Hash - Mil horas de amor.m4a" },
+    { id: 3, title: "Te siento de solo pensar", artist: "Pedro Suarez Vertiz", src: "audio/Pedro Suarez Vertiz - Te siento de solo pensar.m4a" },
+    { id: 4, title: "Goodbye horses", artist: "Q Lazzarus", src: "audio/Q Lazzarus - Goodbye horses.m4a" },
+    { id: 5, title: "Sin aliento", artist: "Danza Invisible", src: "audio/Danza Invisible - Sin aliento.m4a" },
+    { id: 6, title: "Sin disfraz", artist: "Virus", src: "audio/Virus - Sin disfraz.m4a" }
 ];
 
-
 // Ordenamos el listado de canciones por artista
-const sortedSongs = songs
-    .map((song, idx) => ({ ...song, idx }))
-    .sort((a, b) => a.artist.localeCompare(b.artist));
+songs.sort((a, b) => a.artist > b.artist ? 1 : a.artist < b.artist ? -1 : 0);
 
-const recentlyPlayed = [];
-
-console.log(sortedSongs);
 const totalSongs = songs.length;
-let currentSongIndex = 0; // El primer objeto del array de canciones despues de ser ordenado por artista
-let isRepeat = false;
-let isRandom = false;
-
 const audio = document.querySelector("audio");
-
+const title = document.querySelector(".title");
+const nextTrackBtn = document.querySelector(".nextTrackBtn");
+const loopTrackBtn = document.querySelector(".loopTrackBtn");
+const previousTrackBtn = document.querySelector(".previousTrackBtn");
 const songList = document.querySelector(".song-list");
-const songTitle = document.querySelector(".song-title");
-const prevBtn = document.querySelector(".prevBtn");
-const nextBtn = document.querySelector(".nextBtn");
-const repeatBtn = document.querySelector(".repeatBtn");
-const randomBtn = document.querySelector(".randomBtn");
 
-const displaySongList = async () => {
+let currentSongIndex = 0;
+let isLoop = false;
 
+const displaySongs = () => {
+    // let listItem; Esta instruccion generaba un BUG
     const fragment = document.createDocumentFragment();
-    sortedSongs.forEach((obj, idx) => {
-        const li = document.createElement("li");
-        li.textContent = (idx + 1) + ". " + obj.src.slice(obj.src.lastIndexOf("/") + 1);
-        li.dataset.idx = idx; // Guardamos el índice
+    songs.forEach((song, idx) => {
 
-        // Si es la canción que está sonando, resaltarla
+        const listItem = document.createElement("li");
+        listItem.textContent = (idx + 1) + ". " + song.src.slice(song.src.lastIndexOf("/") + 1);
+        listItem.dataset.idx = idx; // Guardamos el índice
+
         if (idx === currentSongIndex) {
-            li.classList.add("playing");
+            listItem.classList.add("active");
         }
 
-        li.onclick = () => {
-            const previous = document.querySelector("li.playing");
-            if (previous) previous.classList.remove("playing");
+        listItem.onclick = () => {
+            const previous = document.querySelector("li.active");
+            if (previous) previous.classList.remove("active");
 
-            li.classList.add("playing");
+            listItem.classList.add("active");
 
             currentSongIndex = idx;
-            loadSong(currentSongIndex);
+            loadSong(songs[currentSongIndex]);
             audio.play();
-        };
-
-        fragment.appendChild(li);
+        }
+        fragment.appendChild(listItem);
     });
     songList.appendChild(fragment);
-};
-
-const loadSong = (index) => {
-    audio.src = sortedSongs[index].src;
-    songTitle.textContent = "🎵 " + sortedSongs[index].artist + " - " + sortedSongs[index].title + " 🎵";
-};
-
-const shuffle = (songs) => {
-    const n = songs.length;
-    for (let i = 0; i < n; i++) {
-        const r = i + Math.floor(Math.random() * (n - i));
-        [songs[i], songs[r]] = [songs[r], songs[i]]; // Intercambia los elementos
-    }
 }
 
-const checkPlaying = (index) => {
-    const previous = document.querySelector("li.playing");
-    if (previous) previous.classList.remove("playing");
-    const current = document.querySelector(`.song-list li[data-idx='${index}']`);
+const checkActive = (idx) => {
+    const previous = document.querySelector("li.active");
+    if (previous) previous.classList.remove("active");
+    const current = songList.querySelector(`li[data-idx='${idx}']`);
 
     if (current) {
-        current.classList.add("playing");
+        current.classList.add("active");
         current.scrollIntoView({ behavior: "smooth", block: "center" });
     }
 }
 
+const loadSong = (song) => {
+    audio.src = song.src;
+    title.textContent = "🎵 " + song.title + " - " + song.artist + " 🎵";
+}
+
 audio.addEventListener("ended", () => {
-
-    if (isRepeat) {
-        audio.play();
+    if (currentSongIndex < totalSongs - 1) {
+        currentSongIndex += 1;
+        loadSong(songs[currentSongIndex]); // Cargamos el siguiente audio
+        audio.play(); // Reproducimos el audio
     } else {
-
-        currentSongIndex = currentSongIndex + 1;
-        checkPlaying(currentSongIndex);
-
-        if (currentSongIndex < totalSongs) {
-            loadSong(currentSongIndex);
-            audio.play();
-        } else {
-            currentSongIndex = 0;
-            checkPlaying(currentSongIndex);
-            loadSong(currentSongIndex);
-        }
+        currentSongIndex = 0;
+        loadSong(songs[currentSongIndex]);
     }
+
+    checkActive(currentSongIndex);
 });
 
-nextBtn.addEventListener("click", function () {
-
-    currentSongIndex = (currentSongIndex + 1) % totalSongs;
-
-    checkPlaying(currentSongIndex);
-
-    if (!audio.paused) {
-        loadSong(currentSongIndex);
-        audio.play();
-    } else {
-        loadSong(currentSongIndex);
-    }
-});
-
-prevBtn.addEventListener("click", function () {
+previousTrackBtn.addEventListener("click", () => {
     currentSongIndex = (currentSongIndex - 1 + totalSongs) % totalSongs;
+    if (!audio.paused) { // Si el audio previo se esta reproduciendo
+        loadSong(songs[currentSongIndex]); // Cargamos el siguiente audio
+        audio.play(); // Reproducimos el audio
+    } else {
+        loadSong(songs[currentSongIndex]);
+    }
 
-    checkPlaying(currentSongIndex);
+    checkActive(currentSongIndex);
+});
 
+nextTrackBtn.addEventListener("click", () => {
+    currentSongIndex = (currentSongIndex + 1) % totalSongs;
     if (!audio.paused) {
-        loadSong(currentSongIndex);
+        loadSong(songs[currentSongIndex]);
         audio.play();
     } else {
-        loadSong(currentSongIndex);
+        loadSong(songs[currentSongIndex]);
     }
+
+    checkActive(currentSongIndex);
 });
 
-repeatBtn.addEventListener("click", function () {
-    isRepeat = !isRepeat;
-    repeatBtn.querySelector(".icon").classList.toggle("active");
-    audio.loop = isRepeat;
-    // if (isRepeat) {
-    //     audio.currentTime = 0;
-    //     audio.play();
-    // }
+loopTrackBtn.addEventListener("click", () => {
+    isLoop = !isLoop;
+    audio.loop = isLoop;
+    loopTrackBtn.textContent = isLoop ? "🔂" : "🔁";
 });
 
-/**
- * Al hacer click en el random la cancion que se encuentra sonando no debe detenerse
-*/
-randomBtn.addEventListener("click", function () {
-    isRandom = !isRandom;
-    randomBtn.querySelector(".icon").classList.toggle("active");
-    if (isRandom) {
-        console.log(currentSongIndex);
-        shuffle(sortedSongs);
-        // currentSongIndex = 0;
-        // loadSong(currentSongIndex);
-        //console.log(sortedSongs);
-    } else {
-        console.log("Se desactivo el random continuar en el indice del listado orignal a la ultima cancion.");
-    }
-});
-
-loadSong(currentSongIndex); // Carga la primera cancion en el índice 0
-displaySongList();
+displaySongs();
+loadSong(songs[currentSongIndex]);
