@@ -17,6 +17,15 @@ body {
             align-items: center; */
 }
 
+.container {
+    width: 100%;
+    max-width: 330px;
+    margin: auto;
+    /* border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); */
+}
+
 .mt-1 {
     margin-top: 1rem;
 }
@@ -94,6 +103,7 @@ body {
     justify-content: center;
     gap: 12px;
     align-items: center;
+    font-size: 22px;
 }
 
 button {
@@ -102,3 +112,4 @@ button {
     border: none;
     outline: none;
 }
+
